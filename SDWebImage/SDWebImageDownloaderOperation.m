@@ -443,12 +443,13 @@ didReceiveResponse:(NSURLResponse *)response
     __block NSURLCredential *credential = nil;
     
     if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-        if (!(self.options & SDWebImageDownloaderAllowInvalidSSLCertificates)) {
-            disposition = NSURLSessionAuthChallengePerformDefaultHandling;
-        } else {
+        //zcr 2018/9/10 不校验SSL证书
+//        if (!(self.options & SDWebImageDownloaderAllowInvalidSSLCertificates)) {
+//            disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+//        } else {
             credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
             disposition = NSURLSessionAuthChallengeUseCredential;
-        }
+//        }
     } else {
         if (challenge.previousFailureCount == 0) {
             if (self.credential) {
